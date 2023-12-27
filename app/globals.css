@@ -18,10 +18,46 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: radial-gradient(circle, #5190ea, #d5cac4, #ffddb7);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient 10s ease-in-out alternate infinite;
+}
+
+@keyframes background-slide {
+  0% {
+    left: 10%;
+  }
+
+  100% {
+    left: 70%;
+  }
+}
+
+.animated-background {
+  background-size: 200% 200%;
+  animation: background-slide 10s ease-in-out alternate infinite;
 }
