@@ -80,7 +80,11 @@ const NavContent = () => {
                 height={20}
                 className={`${isActive ? "" : "invert-colors"}`}
               />
-              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
+              <p
+                className={`${
+                  isActive ? "base-bold" : "base-medium"
+                } text-white`}
+              >
                 {item.label}
               </p>
             </Link>
@@ -119,7 +123,7 @@ const Navbar1 = () => {
               </h1>
             </Link>
             <div>
-              <SheetClose asChild>
+              <SheetClose asChild className="text-white">
                 <NavContent />
               </SheetClose>
               {/* <SignedOut>
