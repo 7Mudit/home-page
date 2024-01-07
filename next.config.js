@@ -7,6 +7,10 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    // Allow images from all domains
+    domains: ["example.com", "anotherdomain.com", "deepmind.google"],
+  },
 };
 
 module.exports = nextConfig;

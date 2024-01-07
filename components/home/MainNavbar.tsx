@@ -12,7 +12,7 @@ const navbarLinks = [
 
 const MainNavbar = () => {
   return (
-    <div className="bg-[#454344]  w-[640px] px-[26px] h-[52px] border-none rounded-[50px] sm:flex hidden flex-row sticky self-center top-[50px] z-10  text-white items-center justify-between">
+    <div className="bg-[#454344]  w-[640px] px-[26px] h-[52px] border-none rounded-[50px] sm:flex hidden flex-row sticky self-center top-[50px] z-10  text-white items-center justify-between ">
       {navbarLinks.map((link) => (
         <div className="text-white" key={link.id}>
           <Link

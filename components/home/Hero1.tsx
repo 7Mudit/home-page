@@ -23,6 +23,7 @@ const Hero1 = () => {
           zIndex: "0", // Ensure it's behind the text
         }}
       ></div>
+
       <h1
         className={`text-[12vw] tracking-tight leading-[12vw]  ${inter.className} text-center`}
       >

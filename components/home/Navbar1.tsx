@@ -58,7 +58,7 @@ const NavContent = () => {
   const pathname = usePathname();
 
   return (
-    <section className="flex h-full flex-col gap-6 pt-16">
+    <section className="flex h-full  flex-col gap-6 pt-16">
       {sidebarLinks.map((item: any) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
@@ -97,7 +97,7 @@ const NavContent = () => {
 
 const Navbar1 = () => {
   return (
-    <header className="min-h-[64px] border-b-[1px] border-opacity-30 border-white sm:border-none p-5 flex flex-row items-center  gap-10">
+    <header className="min-h-[64px] border-b-[1px] border-opacity-30 border-white sm:border-none p-5 flex flex-row items-center   gap-10">
       {/* Mobile Nav */}
       <div className="block sm:hidden ">
         <Sheet>
@@ -153,7 +153,7 @@ const Navbar1 = () => {
           <span className="font-bold tracking-wide">Learn</span> To Code
         </h1>
       </Link>
-      <div className="hidden sm:flex flex-row text-white items-center justify-center gap-5">
+      <div className="hidden sm:flex  flex-row text-white items-center justify-center gap-5">
         {navbarLinks.map((link) => (
           <div className="text-white" key={link.id}>
             <Link

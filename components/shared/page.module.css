@@ -1,5 +1,5 @@
 .main {
-  margin-bottom: 100vh;
+  margin-bottom: 10vh;
 }
 
 .container {
@@ -12,12 +12,12 @@
   display: flex;
   overflow: hidden;
   position: sticky;
-  top: 0;
   height: 100vh;
+  top: 0;
   align-items: center;
   justify-content: center;
-  mask-image: url('/medias/mask.svg');
-  mask-position: 52.35% center;
+  mask-image: url('/medias/ms9.svg');
+  mask-position: 50.85% center;
   mask-repeat: no-repeat;
   mask-size: 80%;
 }
