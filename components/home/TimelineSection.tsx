@@ -9,23 +9,24 @@ import Image from "next/image";
 const TimeLine = [
   {
     Logo: Logo1,
-    Heading: "Leadership",
-    Description: "Fully committed to the success company",
+    Heading: "Innovation in Education",
+    Description: "Pioneering new ways to learn coding effectively",
   },
   {
     Logo: Logo2,
-    Heading: "Responsibility",
-    Description: "Students will always be our top priority",
+    Heading: "Student Success",
+    Description: "Empowering students with skills for the tech-driven future",
   },
   {
     Logo: Logo3,
-    Heading: "Flexibility",
-    Description: "The ability to switch is an important skills",
+    Heading: "Adaptive Learning",
+    Description: "Courses that adapt to individual learning styles and pace",
   },
   {
     Logo: Logo4,
-    Heading: "Solve the problem",
-    Description: "Code your way to a solution",
+    Heading: "Problem Solving",
+    Description:
+      "Focus on coding as a key tool for solving real-world problems",
   },
 ];
 

@@ -16,6 +16,9 @@ import HighlightText from "@/components/home/HighlightText";
 import Button from "@/components/home/Button";
 import { FaArrowRight } from "react-icons/fa";
 import Pipes from "@/components/home/Pipes";
+import Footer from "@/components/home/Footer";
+import CardsSection from "@/components/home/CardsSection";
+import PricingSection from "@/components/home/PricingSection";
 
 export default function Home() {
   const paragraph =
@@ -71,7 +74,7 @@ export default function Home() {
 
           <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
             {/* Job that is in Demand - Section 1 */}
-            <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
+            {/* <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
               <div className="text-4xl font-semibold lg:w-[45%] ">
                 Get the skills you need for a{" "}
                 <HighlightText text={"job that is in demand."} />
@@ -86,17 +89,20 @@ export default function Home() {
                   <div className="">Learn More</div>
                 </Button>
               </div>
-            </div>
-
-            {/* Timeline Section - Section 2 */}
+            </div> */}
             <TimelineSection />
+            <CardsSection />
+            {/* Timeline Section - Section 2 */}
 
             {/* Learning Language Section - Section 3 */}
             {/* <LearningLanguageSection /> */}
           </div>
         </div>
+        <PricingSection />
         <Pipes />
-        <div className="h-[100vh]"></div>
+        <div className="w-11/12 relative mx-auto">
+          <Footer />
+        </div>
       </main>
     </div>
   );
