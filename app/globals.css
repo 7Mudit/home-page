@@ -40,10 +40,13 @@ body {
 
 .animated-gradient {
   background: radial-gradient(circle, #5190ea, #d5cac4, #ffddb7);
-  background-size: 300% 300%;
+  background-size: 100% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* Explicitly set text fill color for Safari */
+  -webkit-animation: gradient 10s ease-in-out alternate infinite;
   animation: gradient 10s ease-in-out alternate infinite;
 }
 
@@ -68,6 +71,12 @@ body {
 .animated-background {
   background-size: 200% 200%;
   animation: background-slide 10s ease-in-out alternate infinite;
+}
+
+.combined_gradient {
+  background: linear-gradient(180deg, #f4c4f3, rgba(255, 255, 255, 0.6), #214d76);
+  filter: blur(123px);
+  /* Adjust the blur as needed */
 }
 
 .blue__gradient {

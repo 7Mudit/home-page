@@ -7,8 +7,6 @@ import TextSection from "@/components/home/TextSection";
 import VideoSection from "@/components/home/VideoSection";
 import YtViewsGraph from "@/components/home/YtViewsGraph";
 import CodeSection from "@/components/home/CodeSection";
-// import LocomotiveScroll from "locomotive-scroll";
-// import "locomotive-scroll/dist/locomotive-scroll.css";
 import { useEffect } from "react";
 import ExploreMore from "@/components/home/ExploreMore";
 import TimelineSection from "@/components/home/TimelineSection";
@@ -21,24 +19,12 @@ import CardsSection from "@/components/home/CardsSection";
 import PricingSection from "@/components/home/PricingSection";
 
 export default function Home() {
-  const paragraph =
-    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.";
-
-  // useEffect(() => {
-  //   const scroll = new LocomotiveScroll({
-  //     el: document.querySelector("[data-scroll-container]"),
-  //     smooth: true,
-  //     lerp: 0.05, // Adjust this value to control the speed
-  //     // other options here
-  //   });
-
-  //   return () => {
-  //     scroll.destroy();
-  //   };
-  // }, []);
   return (
     <div>
-      <main className="flex h-full bg-black text-white gap-[100px] flex-col">
+      <main
+        className="flex h-full bg-black text-white gap-[50px] 
+                    sm:gap-[100px] flex-col"
+      >
         <Navbar1 />
         <Hero1 />
         <MainNavbar />
@@ -47,16 +33,16 @@ export default function Home() {
         {/* <div className="h-[50vh]"></div> */}
         <TextSection />
         <VideoSection />
-        <YtViewsGraph />
+        {/* <YtViewsGraph /> */}
         <div className="max-w-maxContent  relative mx-auto">
-          <CodeSection />
-          <ExploreMore />
+          {/* <CodeSection /> */}
+          {/* <ExploreMore /> */}
           {/* Timeline Section - Section 2 */}
         </div>
         <div className="bg-pure-greys-5 text-richblack-700">
           <div className="homepage_bg h-[320px]">
             {/* Explore Full Catagory Section */}
-            <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+            {/* <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
               <div className="lg:h-[150px]"></div>
               <div className="flex flex-row gap-7 text-white lg:mt-8">
                 <Button active={true} linkto={"/signup"}>
@@ -69,7 +55,7 @@ export default function Home() {
                   Learn More
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
@@ -90,19 +76,19 @@ export default function Home() {
                 </Button>
               </div>
             </div> */}
-            <TimelineSection />
-            <CardsSection />
+            {/* <TimelineSection /> */}
+            {/* <CardsSection /> */}
             {/* Timeline Section - Section 2 */}
 
             {/* Learning Language Section - Section 3 */}
             {/* <LearningLanguageSection /> */}
           </div>
         </div>
-        <PricingSection />
-        <Pipes />
-        <div className="w-11/12 relative mx-auto">
+        {/* <PricingSection /> */}
+        {/* <Pipes /> */}
+        {/* <div className="w-11/12 relative mx-auto">
           <Footer />
-        </div>
+        </div> */}
       </main>
     </div>
   );

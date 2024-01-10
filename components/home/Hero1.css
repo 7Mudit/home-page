@@ -1,0 +1,10 @@
+.custom-hover-effect {
+    position: absolute;
+    width: 320px;
+    height: 60%;
+    left: 10%;
+    top: 15%;
+    opacity: 0.35;
+    filter: blur(64px);
+    border-radius: 50%;
+}

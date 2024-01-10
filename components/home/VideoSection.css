@@ -1,0 +1,18 @@
+.headingGradient {
+    position: absolute;
+    width: 600px;
+    height: 157.05px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) matrix(1, 0, -0.03, 1, 0, 0);
+    opacity: 0.2;
+    filter: blur(34px);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+@media screen and (max-width : 720px) {
+    .headingGradient {
+        width: 320px;
+    }
+}

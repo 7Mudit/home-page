@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Inter } from "next/font/google";
 import { Noto_Sans } from "next/font/google";
+import "./VideoSection.css";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
 
@@ -33,55 +34,42 @@ const VideoSection = () => {
   }, [videoRef]);
 
   // Adjust the scale based on visibility
-  const videoScale = inView ? 1.8 : 1;
+  const videoScale = inView ? 1.3 : 1;
   return (
     <div className="flex flex-col items-center gap-[50px] justify-center">
       {/* heading */}
       <div className="relative text-center mt-[150px] ">
         <h1
-          className={`text-4xl ${noto_sans2.className}  font-extrabold text-[80px] text-center text-white leading-normal`}
+          className={`text-[24px] sm:text-[48px] lg:text-[52px] xl:text-[80px] ${noto_sans2.className}  font-extrabold  text-center text-white leading-normal`}
         >
           Master Coding with LTC
         </h1>
-        <div
-          className="bg-red-black"
-          style={{
-            position: "absolute",
-            width: "600px",
-            height: "157.05px",
-            left: "50%", // Center horizontally
-            top: "50%", // Center vertically
-            transform: "translate(-50%, -50%) matrix(1, 0, -0.03, 1, 0, 0)", // Adjust for precise positioning
-            opacity: 0.2,
-            filter: "blur(34px)",
-            borderRadius: "50%",
-            zIndex: "0", // Ensure it's behind the text
-          }}
-        ></div>
+        <div className="bg-red-black headingGradient"></div>
       </div>
       {/* <h2 className={`${inter.className} text-[80px] text-center text-white`}>
         Master Coding with LTC
       </h2> */}
       <div className={`text-center text-gray-500 ${inter.className}`}>
-        <p>Explore the new era of coding education,</p>
-        <p>where technology meets learning.</p>
+        <p className="text-pure-greys-200">
+          Explore the new era of coding education,
+        </p>
+        <p className="text-pure-greys-200">where technology meets learning.</p>
       </div>
       <div
         ref={videoRef}
-        className="h-[400px] flex items-center justify-center mt-[200px]  transition-all duration-500  overflow-hidden shadow-[10px_-5px_50px_-5px] shadow-blue-200"
+        className=" w-[50%] flex items-center justify-center mt-[50px]  transition-all duration-500  overflow-hidden shadow-[10px_-5px_50px_-5px] shadow-blue-200"
         style={{ transform: `scale(${videoScale})` }}
       >
         {/* <div className="mx-3 my-7 s"></div> */}
         {/* YouTube iframe with autoplay and no controls */}
-        <iframe
-          width="600px"
-          height="300px"
-          src="https://www.youtube.com/embed/0MBfZY0FnKk?autoplay=1&controls=0&mute=1"
-          title="JavaScript for Beginners: Introduction, Features, and First Code | Episode 1"
-          className="shadow-lg rounded-xl dark:shadow-dimWhite shadow-emerald-400"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
+
+        <video
+          src="/medias/banner.mp4"
+          className="videoStylings"
+          autoPlay
+          muted
+          controls={false}
+        ></video>
       </div>
     </div>
   );

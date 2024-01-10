@@ -97,7 +97,7 @@ const NavContent = () => {
 
 const Navbar1 = () => {
   return (
-    <header className="min-h-[64px] border-b-[1px] border-opacity-30 border-white sm:border-none p-5 flex flex-row items-center   gap-10">
+    <header className="min-h-[64px] sticky sm:relative top-0 z-10 bg-black border-b-[1px] border-opacity-30 border-white sm:border-none p-5 flex flex-row items-center   gap-10">
       {/* Mobile Nav */}
       <div className="block sm:hidden ">
         <Sheet>

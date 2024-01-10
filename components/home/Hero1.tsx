@@ -1,31 +1,16 @@
 import React from "react";
 // import { Noto_Sans } from "next/font/google";
 import { Inter } from "next/font/google";
-
+import "./Hero1.css";
 // const noto_sans2 = Noto_Sans({ weight: "400", subsets: ["latin"] });
 const inter = Inter({ weight: "500", subsets: ["latin"] });
 
 const Hero1 = () => {
   return (
-    <div className="text-white  flex px-2 sm:px-24 pt-24 flex-col w-full items-center justify-center relative overflow-hidden">
-      <div
-        className="bg-gemini-style-gradient hidden sm:block animated-background"
-        style={{
-          position: "absolute",
-          width: "320px",
-          height: "60%",
-          left: "10%", // Center horizontally
-          top: "15%", // Center vertically
-          //   transform: "translate(-50%, -50%) matrix(1, 0, -0.03, 1, 0, 0)", // Adjust for precise positioning
-          opacity: 0.35,
-          filter: "blur(64px)",
-          borderRadius: "50%",
-          zIndex: "0", // Ensure it's behind the text
-        }}
-      ></div>
-
+    <div className="text-white  flex px-2 sm:p-24 pt-48 flex-col w-full items-center justify-center relative  overflow-hidden">
+      <div className="bg-gemini-style-gradient custom-hover-effect hidden sm:block animated-background"></div>
       <h1
-        className={`text-[12vw] tracking-tight leading-[12vw]  ${inter.className} text-center`}
+        className={`text-[12vw] tracking-tight leading-[12vw]  ${inter.className} text-center relative`}
       >
         Welcome to
       </h1>
