@@ -1,0 +1,45 @@
+.ytViewsStyling {
+    width: 615.238px;
+    transform: rotate(-0.475874rad);
+    overflow: hidden;
+}
+
+@media screen and (max-width : 1280px) {
+    .ytViewsStyling {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width : 1080px) {
+    .ytViewsStyling {
+        width: 400px;
+        transform: rotate(-0.675874rad);
+    }
+}
+
+@media screen and (max-width : 640px) {
+    .ytViewsStyling {
+        width: 350px;
+        transform: rotate(-0.625874rad);
+        left: 100px;
+        top: 40%;
+    }
+}
+
+@media screen and (max-width : 520px) {
+    .ytViewsStyling {
+        width: 300px;
+        transform: rotate(-0.625874rad);
+        left: 50px;
+        top: 35%;
+    }
+}
+
+@media screen and (max-width : 380px) {
+    .ytViewsStyling {
+        width: 200px;
+        transform: rotate(-0.925874rad);
+        left: 50px;
+        top: 35%;
+    }
+}

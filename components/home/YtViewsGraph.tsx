@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Inter } from "next/font/google";
 import { Noto_Sans } from "next/font/google";
 import CountUp from "react-countup";
+import Heading from "./Heading";
+import "./YtViewsGraph.css";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
 const inter = Inter({ weight: "400", subsets: ["latin"] });
@@ -37,68 +39,49 @@ const YtViewsGraph = () => {
   return (
     <>
       {/* heading */}
-      <div className="relative text-center mt-[150px] ">
-        <h1
-          className={`text-4xl ${noto_sans2.className}  font-extrabold text-[80px] text-center text-white leading-normal`}
-        >
-          Our Journey in Numbers
-        </h1>
-        <div
-          className="bg-red-black"
-          style={{
-            position: "absolute",
-            width: "600px",
-            height: "157.05px",
-            left: "50%", // Center horizontally
-            top: "50%", // Center vertically
-            transform: "translate(-50%, -50%) matrix(1, 0, -0.03, 1, 0, 0)", // Adjust for precise positioning
-            opacity: 0.2,
-            filter: "blur(34px)",
-            borderRadius: "50%",
-            zIndex: "0", // Ensure it's behind the text
-          }}
-        ></div>
-      </div>
+      <Heading heading="Our Journey in Numbers" />
       <div
-        className={`flex ${inter.className} items-center justify-center flex-col  px-[150px] relative gap-[150px]`}
+        className={`flex ${inter.className} items-center justify-center flex-col gap-[150px] px-[30px] mt-[30px] md:px-[150px] relative `}
       >
         <div className="flex flex-row border-b-2  border-dotted border-gray-500 w-full justify-between items-end">
           <div className="flex flex-col gap-5 p-2">
-            <p className="text-gray-500 font-extrabold py-4 text-[40px] leading-[30px]">
+            <p className="text-gray-500 font-extrabold py-4 text-[32px] sm:text-[48px]  leading-normal sm:leading-[30px]">
               YouTube
             </p>
           </div>
           <div className="flex flex-col gap-5 p-2">
-            <p className="text-white text-lg">Learn To Code</p>
+            <p className="text-white text-[14px] sm:text-xl">Learn To Code</p>
             {inView ? (
-              <p className="animated-gradient-text text-[90px] leading-[90px]">
+              <p className="animated-gradient-text text-[32px] sm:text-[90px]  leading-normal sm:leading-[90px]">
                 <CountUp end={172} duration={5} />
                 K+
               </p>
             ) : (
-              <p className="animated-gradient-text text-[90px] leading-[90px]">
+              <p className="animated-gradient-text leading-normal text-[32px] sm:text-[90px] sm:leading-[90px]">
                 0
               </p>
             )}
 
-            <p className="text-gray-500 font-extrabold self-end">Views</p>
+            <p className="text-pure-greys-300 text-[14px] sm:text-[24px] leading-normal  font-extrabold self-end">
+              Views
+            </p>
           </div>
         </div>
         {/* <div className="h-[2px] w-full " /> */}
         <svg
           ref={chartRef}
           id="chart"
-          width="742"
-          height="100"
+          // width="742"
+          // height="100"
           viewBox="0 0 442 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          style={{
-            width: "615.238px",
-            rotate: "-0.475874rad",
-            overflow: "hidden",
-          }} // Updated style attribute
-          className="absolute left-[45%] top-0 translate-x-[-50%]"
+          // style={{
+          //   width: "615.238px",
+          //   rotate: "-0.475874rad",
+          //   overflow: "hidden",
+          // }} // Updated style attribute
+          className="absolute ytViewsStyling"
         >
           <path
             className={inView ? "path-animation" : ""}
@@ -121,10 +104,10 @@ const YtViewsGraph = () => {
             </linearGradient>
           </defs>
         </svg>
-        <div className="flex flex-row w-full justify-between items-end">
+        <div className="flex flex-col gap-[20px] sm:gap-0 sm:flex-row w-full justify-between sm:items-end">
           <div className="flex flex-col gap-2">
             {inView ? (
-              <p className="text-white text-[50px]">
+              <p className="text-white text-[32px] leading-normal sm:text-[50px]">
                 <CountUp end={100} duration={5} />+
               </p>
             ) : (
@@ -139,12 +122,12 @@ const YtViewsGraph = () => {
               <p className="text-pure-greys-500 text-sm">Real-world projects</p>
             </div>
 
-            <p className="text-white text-sm w-[50%]">
+            <p className="text-white text-sm w-full sm:w-[50%]">
               *Engage in practical sessions to solidify your coding skills.
             </p>
           </div>
 
-          <p className="animated-gradient-text self-start text-[20px] w-[30%]">
+          <p className="animated-gradient-text self-start text-sm xl:text-[24px] leading-normal w-full sm:w-[30%]">
             Join &ldquo;Learn to Code&rdquo; to master programming languages,
             develop problem-solving skills, and build projects that matter
           </p>

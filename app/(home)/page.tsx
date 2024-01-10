@@ -33,7 +33,7 @@ export default function Home() {
         {/* <div className="h-[50vh]"></div> */}
         <TextSection />
         <VideoSection />
-        {/* <YtViewsGraph /> */}
+        <YtViewsGraph />
         <div className="max-w-maxContent  relative mx-auto">
           {/* <CodeSection /> */}
           {/* <ExploreMore /> */}
