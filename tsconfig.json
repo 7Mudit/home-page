@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "components/home/Character.jsx",
-    "components/home/Pipes.tsx"
+    "components/home/Pipes.tsx",
+    "../text-clip-mask-on-scroll/temp.tsx"
   ],
   "exclude": ["node_modules"]
 }
