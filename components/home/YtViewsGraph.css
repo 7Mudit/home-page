@@ -12,14 +12,14 @@
 
 @media screen and (max-width : 1080px) {
     .ytViewsStyling {
-        width: 400px;
+        width: 350px;
         transform: rotate(-0.675874rad);
     }
 }
 
 @media screen and (max-width : 640px) {
     .ytViewsStyling {
-        width: 350px;
+        width: 400px;
         transform: rotate(-0.625874rad);
         left: 100px;
         top: 40%;

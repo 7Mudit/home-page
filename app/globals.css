@@ -103,8 +103,15 @@ body {
   /* Adjust this value to the length of your path */
   stroke-dashoffset: 1000;
   /* Same as stroke-dasharray initially */
-  animation: drawPath 10s ease forwards;
+  animation: drawPath 10s ease-in-out forwards;
   /* Adjust duration and easing as needed */
+}
+
+.path-animation2 {
+  stroke-dasharray: 1000;
+  /* Adjust this value to the length of your path */
+  stroke-dashoffset: 1000;
+
 }
 
 @keyframes drawPath {
