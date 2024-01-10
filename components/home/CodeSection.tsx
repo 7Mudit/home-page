@@ -4,65 +4,59 @@ import HighlightText from "./HighlightText";
 
 const CodeSection = () => {
   return (
-    <div className="flex flex-col gap-[100px]">
+    <div className="flex flex-col px-[20px] gap-[100px]">
       {/* Code Section 1  */}
-      <div>
-        <CodeBlocks
-          position={"lg:flex-row"}
-          heading={
-            <div className="text-4xl font-semibold">
-              Unlock your
-              <HighlightText text={" coding potential"} /> with our online
-              courses.
-            </div>
-          }
-          subheading={
-            "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
-          }
-          ctabtn1={{
-            btnText: "Try it Yourself",
-            link: "/signup",
-            active: true,
-          }}
-          ctabtn2={{
-            btnText: "Learn More",
-            link: "/signup",
-            active: false,
-          }}
-          codeColor={"text-yellow-25"}
-          codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>This is myPage</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav> <a href="/one">One</a> <a href="/two">Two</a> <a href="/three">Three</a>\n</nav>\n</body>`}
-          backgroundGradient={<div className="codeblock1 absolute"></div>}
-        />
-      </div>
+      <CodeBlocks
+        position={"lg:flex-row"}
+        heading={
+          <div className="text-4xl font-semibold">
+            Master Algorithms with
+            <HighlightText text={" LeetCode Challenges"} />
+          </div>
+        }
+        subheading={
+          "Dive deep into algorithmic problems with our interactive LeetCode challenges. Enhance your problem-solving skills and prepare for technical interviews."
+        }
+        ctabtn1={{
+          btnText: "Start Solving",
+          link: "/leetcode-challenges",
+          active: true,
+        }}
+        ctabtn2={{
+          btnText: "Explore Algorithms",
+          link: "/algorithms",
+          active: false,
+        }}
+        codeColor={"text-yellow-25"}
+        codeblock={`def binary_search(arr, target):\n    left, right = 0, len(arr) - 1\n\n    while left <= right:\n        mid = (left + right)\n        if arr[mid] == target:\n            return mid  # Target found\n        elif arr[mid] < target:\n            left = mid + 1  # Search in the right half\n        else:\n            right = mid - 1  # Search in the left half\n\n    return -1  # Target not found\n\n`}
+      />
 
       {/* Code Section 2 */}
-      <div>
-        <CodeBlocks
-          position={"lg:flex-row-reverse"}
-          heading={
-            <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
-              Start
-              <HighlightText text={" coding in seconds"} />
-            </div>
-          }
-          subheading={
-            "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
-          }
-          ctabtn1={{
-            btnText: "Continue Lesson",
-            link: "/signup",
-            active: true,
-          }}
-          ctabtn2={{
-            btnText: "Learn More",
-            link: "/signup",
-            active: false,
-          }}
-          codeColor={"text-white"}
-          codeblock={`import React from "react";\n import CTAButton from "./Button";\nimport TypeAnimation from "react-type";\nimport { FaArrowRight } from "react-icons/fa";\n\nconst Home = () => {\nreturn (\n<div>Home</div>\n)\n}\nexport default Home;`}
-          backgroundGradient={<div className="codeblock2 absolute"></div>}
-        />
-      </div>
+      <CodeBlocks
+        position={"lg:flex-row-reverse"}
+        heading={
+          <div className="w-[100%] text-4xl font-semibold ">
+            Build Stunning Websites with
+            <HighlightText text={" new web frameworks"} />
+          </div>
+        }
+        subheading={
+          "Learn how to create dynamic and responsive websites using React. From simple components to complex interactive UIs, start building amazing web experiences."
+        }
+        ctabtn1={{
+          btnText: "Continue Learning",
+          link: "/react-tutorials",
+          active: true,
+        }}
+        ctabtn2={{
+          btnText: "View Projects",
+          link: "/projects",
+          active: false,
+        }}
+        codeColor={"text-white"}
+        codeblock={`// Simple React Component\nimport React from 'react';\n\nconst WelcomeMessage = () => {\n  return (\n    <div>\n      <h1>Welcome to Our Website!</h1>\n      <p>Explore our tutorials and start your coding journey today.</p>\n    </div>\n  );\n};\n\nexport default WelcomeMessage;`}
+        backgroundGradient={<div className="codeblock2 absolute"></div>}
+      />
     </div>
   );
 };

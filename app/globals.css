@@ -40,7 +40,7 @@ body {
 
 .animated-gradient {
   background: radial-gradient(circle, #5190ea, #d5cac4, #ffddb7);
-  background-size: 100% 100%;
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

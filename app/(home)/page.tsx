@@ -35,7 +35,7 @@ export default function Home() {
         <VideoSection />
         <YtViewsGraph />
         <div className="max-w-maxContent  relative mx-auto">
-          {/* <CodeSection /> */}
+          <CodeSection />
           {/* <ExploreMore /> */}
           {/* Timeline Section - Section 2 */}
         </div>
