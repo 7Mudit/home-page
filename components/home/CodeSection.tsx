@@ -29,6 +29,7 @@ const CodeSection = () => {
         }}
         codeColor={"text-yellow-25"}
         codeblock={`def binary_search(arr, target):\n    left, right = 0, len(arr) - 1\n\n    while left <= right:\n        mid = (left + right)\n        if arr[mid] == target:\n            return mid  # Target found\n        elif arr[mid] < target:\n            left = mid + 1  # Search in the right half\n        else:\n            right = mid - 1  # Search in the left half\n\n    return -1  # Target not found\n\n`}
+        backgroundGradient={<div className="codeblock1 absolute"></div>}
       />
 
       {/* Code Section 2 */}
