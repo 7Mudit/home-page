@@ -8,7 +8,7 @@ export default function TextClipMaskEffect() {
 
   const initialMaskSize = 0.8;
   const targetMaskSize = 30;
-  const easing = 0.15;
+  const easing = 1.15;
   let easedScrollProgress = 0;
 
   useEffect(() => {

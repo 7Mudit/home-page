@@ -17,6 +17,7 @@ import Pipes from "@/components/home/Pipes";
 import Footer from "@/components/home/Footer";
 import CardsSection from "@/components/home/CardsSection";
 import PricingSection from "@/components/home/PricingSection";
+import Works from "@/components/home/Works";
 
 export default function Home() {
   return (
@@ -37,6 +38,7 @@ export default function Home() {
         <div className="max-w-maxContent  relative mx-auto">
           <CodeSection />
           {/* <ExploreMore /> */}
+          <Works />
           {/* Timeline Section - Section 2 */}
         </div>
         <div className="bg-pure-greys-5 text-richblack-700">

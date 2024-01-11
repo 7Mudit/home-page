@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import CourseCard from "./CourseCard";
 import HighlightText from "./HighlightText";
+import { Tilt } from "react-tilt";
 
 const HomePageExplore = [
   {
@@ -22,7 +23,7 @@ const HomePageExplore = [
         lessionNumber: 6,
       },
       {
-        heading: "Responsive Web design",
+        heading: "Upsolve Contest Questions",
         description:
           "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
         level: "Beginner",
@@ -31,10 +32,10 @@ const HomePageExplore = [
     ],
   },
   {
-    tag: "New to coding",
+    tag: "NPTEL",
     courses: [
       {
-        heading: "HTML",
+        heading: "Quantum Physics",
         description:
           "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
         level: "Beginner",
@@ -57,7 +58,7 @@ const HomePageExplore = [
     ],
   },
   {
-    tag: "Most popular",
+    tag: "My Campus",
     courses: [
       {
         heading: "Java",
@@ -82,67 +83,9 @@ const HomePageExplore = [
       },
     ],
   },
-  {
-    tag: "Skills paths",
-    courses: [
-      {
-        heading: "Flask",
-        description:
-          "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-        level: "Beginner",
-        lessionNumber: 6,
-      },
-      {
-        heading: "Django",
-        description:
-          "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-        level: "Beginner",
-        lessionNumber: 6,
-      },
-      {
-        heading: "Fast API",
-        description:
-          "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-        level: "Beginner",
-        lessionNumber: 6,
-      },
-    ],
-  },
-  {
-    tag: "Career paths",
-    courses: [
-      {
-        heading: "Next.js",
-        description:
-          "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-        level: "Beginner",
-        lessionNumber: 6,
-      },
-      {
-        heading: "Nuxt.js",
-        description:
-          "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-        level: "Beginner",
-        lessionNumber: 6,
-      },
-      {
-        heading: "Sanity",
-        description:
-          "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-        level: "Beginner",
-        lessionNumber: 6,
-      },
-    ],
-  },
 ];
 
-const tabsName = [
-  "Free",
-  "New to coding",
-  "Most popular",
-  "Skills paths",
-  "Career paths",
-];
+const tabsName = ["Free", "NPTEL", "My Campus"];
 
 const ExploreMore = () => {
   const [currentTab, setCurrentTab] = useState(tabsName[0]);
@@ -192,6 +135,7 @@ const ExploreMore = () => {
       <div className="hidden lg:block lg:h-[200px]"></div>
 
       {/* Cards Group */}
+
       <div className="lg:absolute gap-10 justify-center lg:gap-0 flex lg:justify-between flex-wrap w-full lg:bottom-[0] lg:left-[50%] lg:translate-x-[-50%]  lg:translate-y-[70%] text-black lg:mb-0 mb-7 lg:px-0 px-3">
         {courses.map((ele, index) => {
           return (
