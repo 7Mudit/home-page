@@ -45,9 +45,9 @@ export default function Home() {
         {/* <CardsSection /> */}
         <PricingSection />
         <Pipes />
-        {/* <div className="w-11/12 relative mx-auto">
+        <div className="w-11/12 relative mx-auto">
           <Footer />
-        </div> */}
+        </div>
       </main>
     </div>
   );
