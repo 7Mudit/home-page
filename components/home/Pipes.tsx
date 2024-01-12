@@ -4,11 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Pipes.css";
 import bg from "./bg.png";
 
-import { Inter } from "next/font/google";
 import { Noto_Sans } from "next/font/google";
+import Heading from "./Heading";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
-const inter = Inter({ weight: "400", subsets: ["latin"] });
 
 const Pipes = () => {
   const svgContainerRef = useRef(null);
@@ -60,13 +59,14 @@ const Pipes = () => {
     const handleWheel = (event) => {
       if (!isInViewport) return;
 
-      event.preventDefault();
+      // event.preventDefault();
       let newProgress = animationProgress + event.deltaY * 0.005;
       newProgress = Math.max(0, newProgress);
       setAnimationProgress(newProgress);
       let allPathsFullyVisible = true;
       const paths = svgContainerRef.current.querySelectorAll(".svg-path");
-      const mirroredPaths = document.querySelectorAll(".svg-path-mirrored");
+      const mirroredPaths =
+        svgContainerRef2.current.querySelectorAll(".svg-path-mirrored");
       paths.forEach((path, index) => {
         const length = totalLengths.current[index];
         const drawLength = Math.max(0, length - length * animationProgress);
@@ -107,28 +107,7 @@ const Pipes = () => {
   return (
     <>
       {/* heading */}
-      <div className="relative text-center mt-[50px] ">
-        <h1
-          className={`text-4xl ${noto_sans2.className}  font-extrabold text-[80px] text-center text-white leading-normal`}
-        >
-          Use Google&apos;s Gemini
-        </h1>
-        <div
-          className="bg-red-black"
-          style={{
-            position: "absolute",
-            width: "600px",
-            height: "157.05px",
-            left: "50%", // Center horizontally
-            top: "50%", // Center vertically
-            transform: "translate(-50%, -50%) matrix(1, 0, -0.03, 1, 0, 0)", // Adjust for precise positioning
-            opacity: 0.2,
-            filter: "blur(34px)",
-            borderRadius: "50%",
-            zIndex: "0", // Ensure it's behind the text
-          }}
-        ></div>
-      </div>
+      <Heading heading="Gemini Pro"></Heading>
       <div className="line-gradient-title__lottie js-animation relative">
         <Image
           src={bg}
