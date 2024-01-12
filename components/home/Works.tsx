@@ -3,9 +3,7 @@ import Image from "next/image";
 import { Tilt } from "react-tilt";
 import img1 from "../assets/Images/FoundingStory.png";
 import Heading from "./Heading";
-import { Inter } from "next/font/google";
 import { Noto_Sans } from "next/font/google";
-import { Link } from "lucide-react";
 import Button from "./Button";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });

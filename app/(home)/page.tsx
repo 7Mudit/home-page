@@ -39,12 +39,13 @@ export default function Home() {
           <CodeSection />
           {/* <ExploreMore /> */}
           <Works />
+          <TimelineSection />
           {/* Timeline Section - Section 2 */}
         </div>
         <div className="bg-pure-greys-5 text-richblack-700">
-          <div className="homepage_bg h-[320px]">
-            {/* Explore Full Catagory Section */}
-            {/* <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
+          {/* <div className="homepage_bg h-[320px]">
+            Explore Full Catagory Section 
+             <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
               <div className="lg:h-[150px]"></div>
               <div className="flex flex-row gap-7 text-white lg:mt-8">
                 <Button active={true} linkto={"/signup"}>
@@ -57,10 +58,10 @@ export default function Home() {
                   Learn More
                 </Button>
               </div>
-            </div> */}
-          </div>
+            </div>
+          </div> */}
 
-          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
+          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center bg-black text-white justify-between gap-8 ">
             {/* Job that is in Demand - Section 1 */}
             {/* <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
               <div className="text-4xl font-semibold lg:w-[45%] ">
@@ -78,7 +79,7 @@ export default function Home() {
                 </Button>
               </div>
             </div> */}
-            {/* <TimelineSection /> */}
+
             {/* <CardsSection /> */}
             {/* Timeline Section - Section 2 */}
 
