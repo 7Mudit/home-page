@@ -89,7 +89,7 @@ const CourseCard = ({
         scale: 1,
         speed: 450,
       }}
-      className={` bg-black ${noto_sans2.className} border-pure-greys-100 border text-white p-5 rounded-2xl sm:w-[360px] w-full`}
+      className={` bg-black ${noto_sans2.className} border-pure-greys-100 border text-white p-5 rounded-2xl md:w-[360px] w-full`}
     >
       {/* image and github floating icon */}
 
@@ -143,7 +143,7 @@ const Works = () => {
       {/* heading */}
       <Heading heading="Courses" />
 
-      <div className="mt-10 items-center justify-center flex flex-wrap gap-7">
+      <div className="mt-10 p-5 items-center justify-center flex flex-wrap gap-7">
         {courses.map((course, index) => (
           <CourseCard key={`project-${index}`} index={index} {...course} />
         ))}

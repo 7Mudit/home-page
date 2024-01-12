@@ -3,6 +3,7 @@ import React from "react";
 import { Inter } from "next/font/google";
 import { Noto_Sans } from "next/font/google";
 import PricingCard from "./PricingCard";
+import Heading from "./Heading";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
 const inter = Inter({ weight: "400", subsets: ["latin"] });
@@ -68,30 +69,9 @@ const PricingSection = () => {
   return (
     <>
       {/* heading */}
-      <div className="relative text-center mt-[50px] ">
-        <h1
-          className={`text-4xl ${noto_sans2.className}  font-extrabold text-[80px] text-center text-white leading-normal`}
-        >
-          Want a Website ?
-        </h1>
-        <div
-          className="bg-red-black"
-          style={{
-            position: "absolute",
-            width: "600px",
-            height: "157.05px",
-            left: "50%", // Center horizontally
-            top: "50%", // Center vertically
-            transform: "translate(-50%, -50%) matrix(1, 0, -0.03, 1, 0, 0)", // Adjust for precise positioning
-            opacity: 0.2,
-            filter: "blur(34px)",
-            borderRadius: "50%",
-            zIndex: "0", // Ensure it's behind the text
-          }}
-        ></div>
-      </div>
+      <Heading heading="Want a Website?" />
 
-      <main className="w-11/12 pt-[100px] items-start justify-center flex-1  mx-auto flex flex-row gap-[50px] ">
+      <main className="w-full md:w-11/12 pt-[100px] flex-wrap items-center px-5  md:items-start justify-center flex-1  mx-auto flex flex-row gap-[50px] ">
         {PricingData.map((card, index) => (
           <PricingCard key={index} {...card} />
         ))}
