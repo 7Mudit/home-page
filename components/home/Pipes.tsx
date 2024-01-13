@@ -7,6 +7,8 @@ import bg from "./bg.png";
 import { Noto_Sans } from "next/font/google";
 import Heading from "./Heading";
 import { Check } from "lucide-react";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
 
@@ -151,6 +153,16 @@ const Pipes = () => {
       {/* heading */}
       <Heading heading="Gemini Pro"></Heading>
       <div className="line-gradient-title__lottie js-animation relative">
+        <div className="absolute top-[45%] z-10 translate-x-[-50%] left-[50%]">
+          <Link href={"/gemini"}>
+            <Button
+              className={`py-6 px-12 text-[16px] bg-white text-black rounded-full duration-300 transition-all hover:scale-105 cursor-pointer ${noto_sans2.className}`}
+            >
+              Use Gemini
+            </Button>
+          </Link>
+        </div>
+
         <Image
           src={bg}
           width="1500"
