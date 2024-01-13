@@ -6,6 +6,7 @@ import bg from "./bg.png";
 
 import { Noto_Sans } from "next/font/google";
 import Heading from "./Heading";
+import { Check } from "lucide-react";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
 
@@ -41,7 +42,7 @@ const Pipes = () => {
       ([entry]) => {
         setIsInViewport(entry.isIntersecting);
       },
-      { threshold: 0.5 } // Adjust this value based on when you want the animation to start
+      { threshold: 1.0 } // Adjust this value based on when you want the animation to start
     );
 
     observer.observe(svgContainerRef.current);
@@ -53,14 +54,31 @@ const Pipes = () => {
   }, []);
 
   useEffect(() => {
-    // let animationProgress = 0;
-    // let mirroredAnimationProgress = 0;
-    let svg1Completed = false;
-    const handleWheel = (event) => {
+    let lastTouchY = 0;
+
+    const handleTouchStart = (event) => {
+      if (event.touches.length === 1) {
+        // Only deal with one finger
+        lastTouchY = event.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (event) => {
+      if (!isInViewport || event.touches.length !== 1) return;
+
+      const touchY = event.touches[0].clientY;
+      const deltaY = lastTouchY - touchY;
+      lastTouchY = touchY;
+
+      // Similar logic to handleWheel
+      updateAnimation(deltaY, event);
+    };
+
+    const updateAnimation = (deltaY, event) => {
       if (!isInViewport) return;
 
       // event.preventDefault();
-      let newProgress = animationProgress + event.deltaY * 0.005;
+      let newProgress = animationProgress + deltaY * 0.005;
       newProgress = Math.max(0, newProgress);
       setAnimationProgress(newProgress);
       let allPathsFullyVisible = true;
@@ -73,10 +91,14 @@ const Pipes = () => {
         path.style.strokeDashoffset = drawLength;
         if (drawLength > 0) allPathsFullyVisible = false;
       });
-
+      let svg2Visible = false;
       if (allPathsFullyVisible) {
-        let newMirroredProgress =
-          mirroredAnimationProgress + event.deltaY * 0.005;
+        let newMirroredProgress = mirroredAnimationProgress + deltaY * 0.005;
+        if (newMirroredProgress >= 1) {
+          svg2Visible = true;
+        } else {
+          svg2Visible = false;
+        }
         setMirroredAnimationProgress(newMirroredProgress);
       } else {
         // Reset mirrored animation progress if svg1 is not fully visible
@@ -92,16 +114,31 @@ const Pipes = () => {
         );
         path.style.strokeDashoffset = -drawLength;
       });
+      if (allPathsFullyVisible && !svg2Visible) {
+        event.preventDefault();
+      }
+    };
+    const handleWheel = (event) => {
+      if (!isInViewport) return;
+      updateAnimation(event.deltaY, event);
     };
 
     if (isInViewport) {
       window.addEventListener("wheel", handleWheel, { passive: false });
+      window.addEventListener("touchstart", handleTouchStart, {
+        passive: false,
+      });
+      window.addEventListener("touchmove", handleTouchMove, { passive: false });
     } else {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     }
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [isInViewport, animationProgress, mirroredAnimationProgress]);
   return (
