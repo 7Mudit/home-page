@@ -114,6 +114,11 @@ const Pipes = () => {
         );
         path.style.strokeDashoffset = -drawLength;
       });
+      // if paths are not visible and animation progress starts then
+      if (!allPathsFullyVisible && animationProgress > 0) {
+        event.preventDefault();
+      }
+      // if svg1 is complete and svg2 not then scrolling stop
       if (allPathsFullyVisible && !svg2Visible) {
         event.preventDefault();
       }
