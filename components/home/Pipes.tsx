@@ -64,7 +64,7 @@ const Pipes = () => {
     };
 
     const handleTouchMove = (event) => {
-      if (!isInViewport || event.touches.length !== 1) return;
+      if (!isInViewport) return;
 
       const touchY = event.touches[0].clientY;
       const deltaY = lastTouchY - touchY;
