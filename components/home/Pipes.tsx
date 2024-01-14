@@ -18,9 +18,10 @@ const Pipes = () => {
   const [isInViewport, setIsInViewport] = useState(false);
   const totalLengths = useRef([]);
   const totalLengths2 = useRef([]);
-  const [animationProgress, setAnimationProgress] = useState(0);
-  const [mirroredAnimationProgress, setMirroredAnimationProgress] = useState(0);
+  const animationProgress = useRef(0);
+  const mirroredAnimationProgress = useRef(0);
   const lastYRef = useRef(0); // Initialize the ref
+
   useEffect(() => {
     const paths = svgContainerRef.current.querySelectorAll(".svg-path");
     const paths2 =
@@ -70,15 +71,6 @@ const Pipes = () => {
     };
   }, []);
   useEffect(() => {
-    let lastTouchY = 0;
-
-    const handleTouchStart = (event) => {
-      if (event.touches.length === 1) {
-        // Only deal with one finger
-        lastTouchY = event.touches[0].clientY;
-      }
-    };
-
     const handleTouchMove = (event) => {
       if (!isInViewport) return;
 
@@ -96,11 +88,46 @@ const Pipes = () => {
       // Apply the adjusted deltaY to update the animation
       updateAnimation(-1 * deltaY, event);
     };
+    // const handleTouchMove = (event) => {
+    //   if (!isInViewport) return;
 
+    //   const currentTouchY = event.touches[0].clientY;
+    //   let deltaY = currentTouchY - lastYRef.current;
+
+    //   lastYRef.current = currentTouchY;
+
+    //   // Normalize deltaY to a fixed range for consistency
+    //   deltaY = deltaY > 0 ? 15 : -15;
+
+    //   updateAnimation(-deltaY, event);
+    // };
     const maxProgressIncrement = 0.5; // Adjust this value based on testing
     function lerp(a, b, n) {
       return (1 - n) * a + n * b;
     }
+
+    // Throttle function (can use Lodash for more robust solution)
+    const throttle = (func, limit) => {
+      let lastFunc;
+      let lastRan;
+      return function () {
+        const context = this;
+        const args = arguments;
+        if (!lastRan) {
+          func.apply(context, args);
+          lastRan = Date.now();
+        } else {
+          clearTimeout(lastFunc);
+          lastFunc = setTimeout(function () {
+            if (Date.now() - lastRan >= limit) {
+              func.apply(context, args);
+              lastRan = Date.now();
+            }
+          }, limit - (Date.now() - lastRan));
+        }
+      };
+    };
+    const throttledTouchMove = throttle(handleTouchMove, 15);
 
     const updateAnimation = (deltaY, event) => {
       if (!isInViewport) return;
@@ -111,18 +138,23 @@ const Pipes = () => {
         Math.min(Math.abs(progressIncrement), maxProgressIncrement);
       let targetProgress = Math.max(
         0,
-        Math.min(animationProgress + progressIncrement, 1)
+        Math.min(animationProgress.current + progressIncrement, 1)
       );
 
-      setAnimationProgress((prevProgress) => {
-        return lerp(prevProgress, targetProgress, 0.2); // Adjust the lerp factor based on desired smoothness
-      });
+      animationProgress.current = lerp(
+        animationProgress.current,
+        targetProgress,
+        0.2
+      ); // Adjust the lerp factor based on desired smoothness
 
       const paths = svgContainerRef.current.querySelectorAll(".svg-path");
       let allPathsFullyVisible = true;
       paths.forEach((path, index) => {
         const length = totalLengths.current[index];
-        const drawLength = Math.max(0, length - length * animationProgress);
+        const drawLength = Math.max(
+          0,
+          length - length * animationProgress.current
+        );
         path.style.strokeDashoffset = drawLength;
         const resistance = 0.01;
         if (drawLength > resistance) allPathsFullyVisible = false;
@@ -136,19 +168,21 @@ const Pipes = () => {
         Math.min(Math.abs(newMirroredProgress), maxProgressIncrement);
       let targetMirroredProgress = Math.max(
         0,
-        Math.min(mirroredAnimationProgress + newMirroredProgress, 1)
+        Math.min(mirroredAnimationProgress.current + newMirroredProgress, 1)
       );
 
-      setMirroredAnimationProgress((prevProgress) => {
-        return lerp(prevProgress, targetMirroredProgress, 0.2); // Smooth transition
-      });
+      mirroredAnimationProgress.current = lerp(
+        mirroredAnimationProgress.current,
+        targetMirroredProgress,
+        0.2
+      ); // Smooth transition
 
       let allMirroredPathsFullyVisible = true;
       mirroredPaths.forEach((path, index) => {
         const length = totalLengths2.current[index];
         const drawLength = Math.max(
           0,
-          length - length * mirroredAnimationProgress
+          length - length * mirroredAnimationProgress.current
         );
         path.style.strokeDashoffset = drawLength;
         const resistance = 0.01;
@@ -165,8 +199,8 @@ const Pipes = () => {
       }
       if (
         deltaY < 0 &&
-        animationProgress >= 0.01 &&
-        mirroredAnimationProgress >= 0.01
+        animationProgress.current >= 0.01 &&
+        mirroredAnimationProgress.current >= 0.01
       ) {
         event.preventDefault();
       }
@@ -179,22 +213,22 @@ const Pipes = () => {
 
     if (isInViewport) {
       window.addEventListener("wheel", handleWheel, { passive: false });
-      window.addEventListener("touchstart", handleTouchStart, {
+      window.addEventListener("touchmove", throttledTouchMove, {
         passive: false,
       });
-      window.addEventListener("touchmove", handleTouchMove, { passive: false });
+      // window.addEventListener("touchmove", handleTouchMove, { passive: false });
     } else {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      // window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchmove", throttledTouchMove);
     }
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      // window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchmove", throttledTouchMove);
     };
-  }, [isInViewport, animationProgress, mirroredAnimationProgress]);
+  }, [isInViewport]);
   return (
     <>
       {/* heading */}
