@@ -20,7 +20,7 @@ const Pipes = () => {
   const totalLengths2 = useRef([]);
   const [animationProgress, setAnimationProgress] = useState(0);
   const [mirroredAnimationProgress, setMirroredAnimationProgress] = useState(0);
-
+  const lastYRef = useRef(0); // Initialize the ref
   useEffect(() => {
     const paths = svgContainerRef.current.querySelectorAll(".svg-path");
     const paths2 =
@@ -40,11 +40,26 @@ const Pipes = () => {
       path.style.strokeDashoffset = totalLengths.current[index]; // Start fully hidden
     });
 
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (
+          entry.target === svgContainerRef.current ||
+          entry.target === svgContainerRef2.current
+        ) {
+          setIsInViewport(entry.isIntersecting);
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null, // observing with respect to the viewport
+      rootMargin: "0px",
+      threshold: 0.9, // adjust as needed
+    };
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInViewport(entry.isIntersecting);
-      },
-      { threshold: 1.0 } // Adjust this value based on when you want the animation to start
+      observerCallback,
+      observerOptions
     );
 
     observer.observe(svgContainerRef.current);
@@ -54,7 +69,6 @@ const Pipes = () => {
       observer.disconnect();
     };
   }, []);
-
   useEffect(() => {
     let lastTouchY = 0;
 
@@ -68,63 +82,96 @@ const Pipes = () => {
     const handleTouchMove = (event) => {
       if (!isInViewport) return;
 
-      const touchY = event.touches[0].clientY;
-      const deltaY = lastTouchY - touchY;
-      lastTouchY = touchY;
+      const currentTouchY = event.touches[0].clientY;
+      let deltaY = currentTouchY - lastYRef.current; // Calculate deltaY using the ref
 
-      // Similar logic to handleWheel
-      updateAnimation(deltaY, event);
+      // Update lastYRef for the next movement
+      lastYRef.current = currentTouchY;
+      // console.log("deltaY", deltaY);
+      // console.log("lastYRef", lastYRef);
+      deltaY =
+        deltaY > lastYRef.current
+          ? Math.abs(deltaY / Math.abs(deltaY)) * 15
+          : (deltaY / Math.abs(deltaY)) * 15; // Adjust the multiplier as needed
+      // Apply the adjusted deltaY to update the animation
+      updateAnimation(-1 * deltaY, event);
     };
+
+    const maxProgressIncrement = 0.5; // Adjust this value based on testing
+    function lerp(a, b, n) {
+      return (1 - n) * a + n * b;
+    }
 
     const updateAnimation = (deltaY, event) => {
       if (!isInViewport) return;
-
       // event.preventDefault();
-      let newProgress = animationProgress + deltaY * 0.005;
-      newProgress = Math.max(0, newProgress);
-      setAnimationProgress(newProgress);
-      let allPathsFullyVisible = true;
+      let progressIncrement = deltaY * 0.005;
+      progressIncrement =
+        Math.sign(progressIncrement) *
+        Math.min(Math.abs(progressIncrement), maxProgressIncrement);
+      let targetProgress = Math.max(
+        0,
+        Math.min(animationProgress + progressIncrement, 1)
+      );
+
+      setAnimationProgress((prevProgress) => {
+        return lerp(prevProgress, targetProgress, 0.2); // Adjust the lerp factor based on desired smoothness
+      });
+
       const paths = svgContainerRef.current.querySelectorAll(".svg-path");
-      const mirroredPaths =
-        svgContainerRef2.current.querySelectorAll(".svg-path-mirrored");
+      let allPathsFullyVisible = true;
       paths.forEach((path, index) => {
         const length = totalLengths.current[index];
         const drawLength = Math.max(0, length - length * animationProgress);
         path.style.strokeDashoffset = drawLength;
-        if (drawLength > 0) allPathsFullyVisible = false;
+        const resistance = 0.01;
+        if (drawLength > resistance) allPathsFullyVisible = false;
       });
-      let svg2Visible = false;
-      if (allPathsFullyVisible) {
-        let newMirroredProgress = mirroredAnimationProgress + deltaY * 0.005;
-        if (newMirroredProgress >= 1) {
-          svg2Visible = true;
-        } else {
-          svg2Visible = false;
-        }
-        setMirroredAnimationProgress(newMirroredProgress);
-      } else {
-        // Reset mirrored animation progress if svg1 is not fully visible
-        setMirroredAnimationProgress(0);
-      }
 
-      // const mirroredPaths = document.querySelectorAll(".svg-path-mirrored");
+      const mirroredPaths =
+        svgContainerRef2.current.querySelectorAll(".svg-path-mirrored");
+      let newMirroredProgress = deltaY * 0.005;
+      newMirroredProgress =
+        Math.sign(newMirroredProgress) *
+        Math.min(Math.abs(newMirroredProgress), maxProgressIncrement);
+      let targetMirroredProgress = Math.max(
+        0,
+        Math.min(mirroredAnimationProgress + newMirroredProgress, 1)
+      );
+
+      setMirroredAnimationProgress((prevProgress) => {
+        return lerp(prevProgress, targetMirroredProgress, 0.2); // Smooth transition
+      });
+
+      let allMirroredPathsFullyVisible = true;
       mirroredPaths.forEach((path, index) => {
         const length = totalLengths2.current[index];
         const drawLength = Math.max(
           0,
           length - length * mirroredAnimationProgress
         );
-        path.style.strokeDashoffset = -drawLength;
+        path.style.strokeDashoffset = drawLength;
+        const resistance = 0.01;
+        if (drawLength > resistance) allMirroredPathsFullyVisible = false;
       });
-      // if paths are not visible and animation progress starts then
-      if (!allPathsFullyVisible && animationProgress > 0) {
+
+      // user going down animation completed
+      if (
+        deltaY > 0 &&
+        !allPathsFullyVisible &&
+        !allMirroredPathsFullyVisible
+      ) {
         event.preventDefault();
       }
-      // if svg1 is complete and svg2 not then scrolling stop
-      if (allPathsFullyVisible && !svg2Visible) {
+      if (
+        deltaY < 0 &&
+        animationProgress >= 0.01 &&
+        mirroredAnimationProgress >= 0.01
+      ) {
         event.preventDefault();
       }
     };
+
     const handleWheel = (event) => {
       if (!isInViewport) return;
       updateAnimation(event.deltaY, event);
@@ -153,7 +200,7 @@ const Pipes = () => {
       {/* heading */}
       <Heading heading="Gemini Pro"></Heading>
       <div className="line-gradient-title__lottie js-animation relative">
-        <div className="absolute top-[45%] z-10 translate-x-[-50%] left-[50%]">
+        {/* <div className="absolute top-[45%] z-10 translate-x-[-50%] left-[50%]">
           <Link href={"/gemini"}>
             <Button
               className={`py-6 px-12 text-[16px] bg-white text-black rounded-full duration-300 transition-all hover:scale-105 cursor-pointer ${noto_sans2.className}`}
@@ -161,7 +208,7 @@ const Pipes = () => {
               Use Gemini
             </Button>
           </Link>
-        </div>
+        </div> */}
 
         <Image
           src={bg}
