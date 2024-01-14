@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
-// import SmoothScrolling from "@/components/home/SmoothScrolling";
+import SmoothScrolling from "@/components/home/SmoothScrolling";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -35,9 +35,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Toaster />
-        {/* <SmoothScrolling> */}
-        {children}
-        {/* </SmoothScrolling> */}
+        <SmoothScrolling>{children}</SmoothScrolling>
       </body>
     </html>
   );

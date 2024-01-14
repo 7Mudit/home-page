@@ -42,7 +42,7 @@ export default function Home() {
           <TimelineSection />
           {/* Timeline Section - Section 2 */}
         </div>
-        {/* <CardsSection /> */}
+        <CardsSection />
         <PricingSection />
         <Pipes />
         <div className="w-11/12 relative mx-auto">

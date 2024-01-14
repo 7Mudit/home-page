@@ -1,6 +1,5 @@
 "use client";
 import styles from "./page.module.scss";
-import { projects } from "./data";
 import Card from "../Card/index";
 import { useScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
@@ -9,6 +8,7 @@ import Lenis from "@studio-freight/lenis";
 import { Inter } from "next/font/google";
 import { Noto_Sans } from "next/font/google";
 import Heading from "./Heading";
+import { projects } from "./data";
 
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
 const inter = Inter({ weight: "400", subsets: ["latin"] });
@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <>
       {/* heading */}
-      <Heading heading="Want similar website?" />
+      <Heading heading="Some of my Works" />
 
       <main ref={container} className={styles.main}>
         {projects.map((project, i) => {
