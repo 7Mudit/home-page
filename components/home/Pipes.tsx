@@ -22,6 +22,7 @@ const Pipes = () => {
   const [animationProgress, setAnimationProgress] = useState(0);
   const [mirroredAnimationProgress, setMirroredAnimationProgress] = useState(0);
   const [isInViewport, setIsInViewport] = useState(false);
+  const lastScrollTop = useRef(0);
 
   // This function linearly interpolates between two values.
   const lerp = (a, b, n) => (1 - n) * a + n * b;
@@ -81,8 +82,9 @@ const Pipes = () => {
   const maxProgressIncrement = 0.5; // Adjust this value based on testing
   useEffect(() => {
     // Function to update the SVG animation based on scroll progress.
-    const updateAnimation = (progress) => {
-      let progressIncrement = progress * 0.005;
+    const updateAnimation = (progress, sign, event) => {
+      // event.preventDefault();
+      let progressIncrement = progress * 0.04;
       progressIncrement =
         Math.sign(progressIncrement) *
         Math.min(Math.abs(progressIncrement), maxProgressIncrement);
@@ -96,15 +98,18 @@ const Pipes = () => {
 
       // Update the stroke offset for each path based on animation progress.
       const paths = svgContainerRef.current.querySelectorAll(".svg-path");
+      let svg1Visible = true;
       paths.forEach((path, index) => {
         const length = totalLengths.current[index];
         const drawLength = Math.max(0, length - length * animationProgress);
         path.style.strokeDashoffset = drawLength;
+        const resistance = 0.01;
+        if (drawLength > resistance) svg1Visible = false;
       });
 
       const mirroredPaths =
         svgContainerRef2.current.querySelectorAll(".svg-path-mirrored");
-      let newMirroredProgress = progress * 0.005;
+      let newMirroredProgress = progress * 0.04;
       newMirroredProgress =
         Math.sign(newMirroredProgress) *
         Math.min(Math.abs(newMirroredProgress), maxProgressIncrement);
@@ -124,16 +129,27 @@ const Pipes = () => {
         );
         path.style.strokeDashoffset = drawLength;
       });
+      // going down
+      // console.log(svg1Visible);
+      // if (sign == 1) {
+      //   console.log("Down");
+      // } else {
+      //   console.log("up");
+      // }
     };
 
     // Event listener for scroll event to update animation.
-    const handleScroll = () => {
-      const scrollProgress =
+    const handleScroll = (event) => {
+      if (!isInViewport) return;
+
+      let scrollProgress =
         window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      updateAnimation(scrollProgress);
+      let sign = scrollProgress > lastScrollTop.current ? 1 : -1;
+      updateAnimation(sign * scrollProgress, sign, event);
+      lastScrollTop.current = scrollProgress;
     };
     if (isInViewport) {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: false });
     } else {
       window.removeEventListener("scroll", handleScroll);
     }
