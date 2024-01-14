@@ -19,22 +19,22 @@ export default function Home() {
     target: container,
     offset: ["start start", "end end"],
   });
-  // useEffect(() => {
-  //   const lenis = new Lenis();
+  useEffect(() => {
+    const lenis = new Lenis();
 
-  //   let animationFrameId: any;
+    let animationFrameId: any;
 
-  //   function raf(time: any) {
-  //     lenis.raf(time);
-  //     animationFrameId = requestAnimationFrame(raf);
-  //   }
+    function raf(time: any) {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    }
 
-  //   animationFrameId = requestAnimationFrame(raf);
+    animationFrameId = requestAnimationFrame(raf);
 
-  //   return () => {
-  //     cancelAnimationFrame(animationFrameId);
-  //   };
-  // }, []);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
 
   return (
     <>
