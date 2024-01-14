@@ -8,19 +8,33 @@ export default function TextClipMaskEffect() {
 
   const initialMaskSize = 0.8;
   const targetMaskSize = 30;
-  const easing = 1.15;
+  const easing = 0.15;
   let easedScrollProgress = 0;
 
   useEffect(() => {
-    requestAnimationFrame(animate);
+    let animationFrameId;
+
+    const animate = () => {
+      const maskSizeProgress = targetMaskSize * getScrollProgress();
+      stickyMask.current.style.webkitMaskSize =
+        (initialMaskSize + maskSizeProgress) * 100 + "%";
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    // Cleanup function
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
-  const animate = () => {
-    const maskSizeProgress = targetMaskSize * getScrollProgress();
-    stickyMask.current.style.webkitMaskSize =
-      (initialMaskSize + maskSizeProgress) * 100 + "%";
-    requestAnimationFrame(animate);
-  };
+  // const animate = () => {
+  //   const maskSizeProgress = targetMaskSize * getScrollProgress();
+  //   stickyMask.current.style.webkitMaskSize =
+  //     (initialMaskSize + maskSizeProgress) * 100 + "%";
+  //   requestAnimationFrame(animate);
+  // };
 
   const getScrollProgress = () => {
     const scrollProgress =
@@ -35,7 +49,7 @@ export default function TextClipMaskEffect() {
     <main className={styles.main}>
       <div ref={container} className={styles.container}>
         <div ref={stickyMask} className={styles.stickyMask}>
-          <video autoPlay muted loop>
+          <video autoPlay muted loop preload="auto">
             <source src="/medias/banner.mp4" type="video/mp4" />
           </video>
         </div>

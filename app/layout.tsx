@@ -35,7 +35,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Toaster />
-        <SmoothScrolling>{children}</SmoothScrolling>
+        {/* <SmoothScrolling> */}
+        {children}
+        {/* </SmoothScrolling> */}
       </body>
     </html>
   );
