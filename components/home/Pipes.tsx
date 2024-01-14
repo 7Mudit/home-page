@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
@@ -7,21 +6,28 @@ import bg from "./bg.png";
 
 import { Noto_Sans } from "next/font/google";
 import Heading from "./Heading";
-import { Check } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import path from "path";
 const noto_sans2 = Noto_Sans({ weight: "600", subsets: ["latin"] });
+
+const lerp = (a: any, b: any, n: any) => (1 - n) * a + n * b;
 
 const Pipes = () => {
   const svgContainerRef = useRef(null);
   const svgContainerRef2 = useRef(null);
-  const [isInViewport, setIsInViewport] = useState(false);
   const totalLengths = useRef([]);
   const totalLengths2 = useRef([]);
   const [animationProgress, setAnimationProgress] = useState(0);
   const [mirroredAnimationProgress, setMirroredAnimationProgress] = useState(0);
-  const lastYRef = useRef(0); // Initialize the ref
+  const [isInViewport, setIsInViewport] = useState(false);
+
+  // This function linearly interpolates between two values.
+  const lerp = (a, b, n) => (1 - n) * a + n * b;
+
   useEffect(() => {
+    // Initialize paths and their lengths.
     const paths = svgContainerRef.current.querySelectorAll(".svg-path");
     const paths2 =
       svgContainerRef2.current.querySelectorAll(".svg-path-mirrored");
@@ -33,14 +39,14 @@ const Pipes = () => {
       path.getTotalLength()
     );
 
+    // Set the stroke dasharray and dashoffset for each path.
     paths.forEach((path, index) => {
       path.style.strokeDasharray = totalLengths.current[index];
       path.style.strokeDashoffset = totalLengths.current[index];
     });
-
     paths2.forEach((path, index) => {
-      path.style.strokeDasharray = totalLengths.current[index];
-      path.style.strokeDashoffset = totalLengths.current[index]; // Start fully hidden
+      path.style.strokeDasharray = totalLengths2.current[index];
+      path.style.strokeDashoffset = totalLengths2.current[index];
     });
 
     const observerCallback = (entries) => {
@@ -57,7 +63,7 @@ const Pipes = () => {
     const observerOptions = {
       root: null, // observing with respect to the viewport
       rootMargin: "0px",
-      threshold: 0.9, // adjust as needed
+      threshold: 0.75, // adjust as needed
     };
 
     const observer = new IntersectionObserver(
@@ -72,43 +78,11 @@ const Pipes = () => {
       observer.disconnect();
     };
   }, []);
-
+  const maxProgressIncrement = 0.5; // Adjust this value based on testing
   useEffect(() => {
-    let lastTouchY = 0;
-    const handleTouchStart = (event) => {
-      if (event.touches.length === 1) {
-        // Only deal with one finger
-        lastTouchY = event.touches[0].clientY;
-      }
-    };
-
-    const handleTouchMove = (event) => {
-      if (!isInViewport) return;
-
-      const currentTouchY = event.touches[0].clientY;
-      let deltaY = currentTouchY - lastYRef.current; // Calculate deltaY using the ref
-
-      // Update lastYRef for the next movement
-      lastYRef.current = currentTouchY;
-      // console.log("deltaY", deltaY);
-      // console.log("lastYRef", lastYRef);
-      deltaY =
-        deltaY > lastYRef.current
-          ? Math.abs(deltaY / Math.abs(deltaY)) * 15
-          : (deltaY / Math.abs(deltaY)) * 15; // Adjust the multiplier as needed
-      // Apply the adjusted deltaY to update the animation
-      updateAnimation(-1 * deltaY, event);
-    };
-
-    const maxProgressIncrement = 0.5; // Adjust this value based on testing
-    function lerp(a, b, n) {
-      return (1 - n) * a + n * b;
-    }
-
-    const updateAnimation = (deltaY, event) => {
-      if (!isInViewport) return;
-      // event.preventDefault();
-      let progressIncrement = deltaY * 0.005;
+    // Function to update the SVG animation based on scroll progress.
+    const updateAnimation = (progress) => {
+      let progressIncrement = progress * 0.005;
       progressIncrement =
         Math.sign(progressIncrement) *
         Math.min(Math.abs(progressIncrement), maxProgressIncrement);
@@ -116,24 +90,21 @@ const Pipes = () => {
         0,
         Math.min(animationProgress + progressIncrement, 1)
       );
-
       setAnimationProgress((prevProgress) => {
         return lerp(prevProgress, targetProgress, 0.5); // Adjust the lerp factor based on desired smoothness
       });
 
+      // Update the stroke offset for each path based on animation progress.
       const paths = svgContainerRef.current.querySelectorAll(".svg-path");
-      let allPathsFullyVisible = true;
       paths.forEach((path, index) => {
         const length = totalLengths.current[index];
         const drawLength = Math.max(0, length - length * animationProgress);
         path.style.strokeDashoffset = drawLength;
-        const resistance = 0.01;
-        if (drawLength > resistance) allPathsFullyVisible = false;
       });
 
       const mirroredPaths =
         svgContainerRef2.current.querySelectorAll(".svg-path-mirrored");
-      let newMirroredProgress = deltaY * 0.005;
+      let newMirroredProgress = progress * 0.005;
       newMirroredProgress =
         Math.sign(newMirroredProgress) *
         Math.min(Math.abs(newMirroredProgress), maxProgressIncrement);
@@ -145,8 +116,6 @@ const Pipes = () => {
       setMirroredAnimationProgress((prevProgress) => {
         return lerp(prevProgress, targetMirroredProgress, 0.5); // Smooth transition
       });
-
-      let allMirroredPathsFullyVisible = true;
       mirroredPaths.forEach((path, index) => {
         const length = totalLengths2.current[index];
         const drawLength = Math.max(
@@ -154,61 +123,26 @@ const Pipes = () => {
           length - length * mirroredAnimationProgress
         );
         path.style.strokeDashoffset = drawLength;
-        const resistance = 0.01;
-        if (drawLength > resistance) allMirroredPathsFullyVisible = false;
       });
-
-      // user going down animation completed
-      if (
-        deltaY > 0 &&
-        !allPathsFullyVisible &&
-        !allMirroredPathsFullyVisible
-      ) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      if (
-        deltaY < 0 &&
-        animationProgress >= 0.01 &&
-        mirroredAnimationProgress >= 0.01
-      ) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
     };
 
-    const handleWheel = (event) => {
-      if (!isInViewport) return;
-      updateAnimation(event.deltaY, event);
-      // let progress =
-      //   lenis.direction === 1
-      //     ? lenis.scroll / 1000
-      //     : -1 * (lenis.scroll / 1000);
-      // // console.log(lenis.direction);
-      // // let progress = lenis.progress
-      // updateAnimation(progress, event);
-      // console.log(progress);
+    // Event listener for scroll event to update animation.
+    const handleScroll = () => {
+      const scrollProgress =
+        window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      updateAnimation(scrollProgress);
     };
-
     if (isInViewport) {
-      window.addEventListener("wheel", handleWheel, { passive: false });
-      window.addEventListener("touchstart", handleTouchStart, {
-        passive: false,
-      });
-      window.addEventListener("touchmove", handleTouchMove, { passive: false });
+      window.addEventListener("scroll", handleScroll);
     } else {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
     }
 
+    // Cleanup function to remove the event listener.
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [isInViewport, animationProgress, mirroredAnimationProgress]);
-
+  }, [animationProgress, mirroredAnimationProgress, isInViewport]);
   return (
     <>
       {/* heading */}

@@ -44,7 +44,7 @@ export default function Home() {
         </div>
         <CardsSection />
         <PricingSection />
-        {/* <Pipes /> */}
+        <Pipes />
         <div className="w-11/12 relative mx-auto">
           <Footer />
         </div>
