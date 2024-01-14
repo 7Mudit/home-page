@@ -159,20 +159,20 @@ const Pipes = () => {
       });
 
       // user going down animation completed
-      if (
-        deltaY > 0 &&
-        !allPathsFullyVisible &&
-        !allMirroredPathsFullyVisible
-      ) {
-        event.preventDefault();
-      }
-      if (
-        deltaY < 0 &&
-        animationProgress >= 0.01 &&
-        mirroredAnimationProgress >= 0.01
-      ) {
-        event.preventDefault();
-      }
+      // if (
+      //   deltaY > 0 &&
+      //   !allPathsFullyVisible &&
+      //   !allMirroredPathsFullyVisible
+      // ) {
+      //   event.preventDefault();
+      // }
+      // if (
+      //   deltaY < 0 &&
+      //   animationProgress >= 0.01 &&
+      //   mirroredAnimationProgress >= 0.01
+      // ) {
+      //   event.preventDefault();
+      // }
     };
 
     const handleWheel = (event) => {
