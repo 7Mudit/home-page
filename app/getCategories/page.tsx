@@ -3,17 +3,33 @@ import Heading from "@/components/home/Heading";
 import { Badge } from "@/components/ui/badge";
 import { getAllCoursesCategory } from "@/lib/actions/course.action";
 import React, { useEffect, useState } from "react";
+interface Category {
+  categoryName: string;
+  categoryDescription: string;
+  // Include other properties of a category if there are any
+}
 
 const Page = () => {
-  const [parsedResult, setParsedResult] = useState([]);
+  const [parsedResult, setParsedResult] = useState<Category[]>([]);
   useEffect(() => {
     const getCourses = async () => {
-      let result = await getAllCoursesCategory();
-      result = JSON.parse(result);
-      setParsedResult(result);
+      try {
+        let result = await getAllCoursesCategory();
+
+        if (typeof result === "string") {
+          result = JSON.parse(result);
+          // @ts-ignore
+          setParsedResult(result);
+        } else {
+          console.error("Invalid result:", result);
+          setParsedResult([]);
+        }
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        setParsedResult([]);
+      }
     };
     getCourses();
-    console.log(parsedResult);
   }, []);
   return (
     <div className="bg-black text-white flex flex-col w-full min-h-screen h-full gap-[100px]">
