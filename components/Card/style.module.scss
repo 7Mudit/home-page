@@ -73,3 +73,20 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .cardContainer .card {
+    padding: 20px;
+  }
+  .cardContainer .card .body {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .cardContainer .card .body .description {
+    width: 90%;
+  }
+  .cardContainer .card .body .imageContainer {
+    width: 100%;
+    height: 50%;
+  }
+}
